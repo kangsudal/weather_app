@@ -3,8 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_app/service/fetchData.dart';
 
 void main() async {
-  fetchData();
   await dotenv.load(fileName: ".env");
+  fetchData();
   runApp(const MyApp());
 }
 
@@ -44,7 +44,7 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class MyAppBar extends StatelessWidget with PreferredSizeWidget{
+class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   const MyAppBar({
     Key? key,
   }) : super(key: key);
@@ -111,11 +111,27 @@ class Top extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Text(
-                  '습도, 비없음, 풍속',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      '비없음',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      '습도',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      '풍속',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -214,9 +230,18 @@ class CellWidget extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          FittedBox(child: Text(date),fit: BoxFit.scaleDown,),
-          FittedBox(child: Icon(icon),fit: BoxFit.scaleDown,),
-          FittedBox(child: Text('$celcious°'),fit: BoxFit.scaleDown,),
+          FittedBox(
+            child: Text(date),
+            fit: BoxFit.scaleDown,
+          ),
+          FittedBox(
+            child: Icon(icon),
+            fit: BoxFit.scaleDown,
+          ),
+          FittedBox(
+            child: Text('$celcious°'),
+            fit: BoxFit.scaleDown,
+          ),
         ],
       ),
     );
