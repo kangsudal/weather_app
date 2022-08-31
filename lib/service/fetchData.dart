@@ -2,6 +2,7 @@ import 'dart:convert' as convert;
 
 import 'package:http/http.dart' as http;
 import 'package:weather_app/model/weather.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void fetchData() async {
   // 기상청_단기예보
@@ -13,7 +14,7 @@ void fetchData() async {
     '/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst',
     {
       'serviceKey':
-          'H8gQIzFIaK7T2MX/TrcejjxsqtuRiY1vKQKqBFMHbQ0lKNx2WSjOCkswlWyhtS8kc3B6/zBJgVWkJals8Bt+oA==',
+          dotenv.env['APIKEY'],
       'pageNo': '1',
       'numOfRows': '1000',
       'dataType': 'json', //요청자료형식
@@ -41,7 +42,7 @@ void fetchData() async {
       map[category]=obsrValue;
     }
     print(map);
-    Weather weather = Weather.fromJson(map);
+    CurrentWeather weather = CurrentWeather.fromJson(map);
     print(weather.toString());
   } else {
     print('Request failed with status: ${response.statusCode}.');
