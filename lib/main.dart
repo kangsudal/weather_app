@@ -37,7 +37,7 @@ class MyHomePage extends StatelessWidget {
           //Top
           Top(),
           //Bottom
-          Bottom(),
+          // Bottom(),
         ],
       ),
     );
