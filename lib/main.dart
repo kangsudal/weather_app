@@ -91,7 +91,7 @@ class Top extends StatelessWidget {
         children: [
           Positioned(
             child: Image.asset(
-              'images/aaron-burden.jpg',
+              'images/Thunderstorm.jpg',
               fit: BoxFit.cover,
             ),
             top: 0,
