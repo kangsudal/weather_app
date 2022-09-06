@@ -87,7 +87,7 @@ class ConvGridGps {
 LinkedHashMap<dynamic,dynamic> getXY(double lat, double lng){
   double latitude = lat;
   double longitude = lng;
-  var gpsToGridData = ConvGridGps.gpsToGRID(37.579871128849334, 126.98935225645432);
+  var gpsToGridData = ConvGridGps.gpsToGRID(lat, lng);
   return gpsToGridData;
   /*
   return
