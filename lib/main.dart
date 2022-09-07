@@ -10,7 +10,7 @@ import 'model/weather.dart';
 void main() async {
   await dotenv.load(fileName: ".env");
   HttpOverrides.global = MyHttpOverrides();
-  fetchCurrentWeather();
+  fetchForecastWeather();
   runApp(const MyApp());
 }
 
@@ -196,36 +196,41 @@ class Bottom extends StatelessWidget {
                 ],
               ),
               //Time & Icon & celcius data Row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  //One cell widget
-                  CellWidget(
-                    date: 'Now',
-                    icon: Icons.cloud,
-                    celcious: '-130',
-                  ),
-                  CellWidget(
-                    date: '10시',
-                    icon: Icons.cloud,
-                    celcious: '-130',
-                  ),
-                  CellWidget(
-                    date: '11시',
-                    icon: Icons.cloud,
-                    celcious: '-130',
-                  ),
-                  CellWidget(
-                    date: '12시',
-                    icon: Icons.cloud,
-                    celcious: '-130',
-                  ),
-                  CellWidget(
-                    date: '13시',
-                    icon: Icons.cloud,
-                    celcious: '-130',
-                  ),
-                ],
+              FutureBuilder<List<Forecast>?>(
+                future: fetchForecastWeather(),
+                builder: (context,snapshot) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //One cell widget
+                      CellWidget(
+                        date: 'Now',
+                        icon: Icons.cloud,
+                        celcious: '-130',
+                      ),
+                      CellWidget(
+                        date: '10시',
+                        icon: Icons.cloud,
+                        celcious: '-130',
+                      ),
+                      CellWidget(
+                        date: '11시',
+                        icon: Icons.cloud,
+                        celcious: '-130',
+                      ),
+                      CellWidget(
+                        date: '12시',
+                        icon: Icons.cloud,
+                        celcious: '-130',
+                      ),
+                      CellWidget(
+                        date: '13시',
+                        icon: Icons.cloud,
+                        celcious: '-130',
+                      ),
+                    ],
+                  );
+                }
               ),
             ],
           ),
