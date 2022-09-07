@@ -1,84 +1,43 @@
-class CurrentWeather {
-  String T1H;//기온
-  String RN1;//1시간 강수량
-  String UUU;//동서바람성분
-  String VVV;//남북바람성분
-  String REH;//습도
-  String PTY;//강수형태
-  String VEC;//풍향
-  String WSD;//풍속
+class Weather {
+  String temp; //기온 T1H
+  String pty; //강수형태 코드
+  String description; //강수형태 코드값 없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4)
+  String backgroundImg;
 
-  CurrentWeather({
-    required this.T1H,
-    required this.RN1,
-    required this.UUU,
-    required this.VVV,
-    required this.REH,
-    required this.PTY,
-    required this.VEC,
-    required this.WSD,
-  });
+  Weather({required this.temp, required this.pty, required this.description, required this.backgroundImg});
 
-  factory CurrentWeather.fromJson(Map<String, dynamic> json) {
-    return CurrentWeather(
-      T1H: json['T1H'],
-      RN1: json['RN1'],
-      UUU: json['UUU'],
-      VVV: json['VVV'],
-      REH: json['REH'],
-      PTY: json['PTY'],
-      VEC: json['VEC'],
-      WSD: json['WSD'],
-    );
+  factory Weather.fromJson(Map<String, dynamic> json) {
+    String temp = json['response']['body']['items']['item'][3]['obsrValue'];
+    String pty = json['response']['body']['items']['item'][0]['obsrValue'];
+    String description = '';
+    String backgroundImg = '';
+    switch (pty) {
+      case '0':
+        description = '비 없음';
+        backgroundImg = 'images/Clear.jpg';
+        break;
+      case '1':
+        description = '비';
+        backgroundImg = 'images/Rain.jpg';
+        break;
+      case '2':
+        description = '진눈깨비';
+        backgroundImg = 'images/Sleet.jpg';
+        break;
+      case '3':
+        description = '눈';
+        backgroundImg = 'images/Snow.jpg';
+        break;
+      case '4':
+        description = '소나기';
+        backgroundImg = 'images/Shower.jpg';
+        break;
+    }
+    return Weather(temp: temp, pty: pty, description: description, backgroundImg: backgroundImg);
   }
 
   @override
   String toString() {
-    return 'Weather{T1H: $T1H, RN1: $RN1, UUU: $UUU, VVV: $VVV, REH: $REH, PTY: $PTY, VEC: $VEC, WSD: $WSD}';
-  }
-}
-class ForecastWeather {
-  String T1H; //기온
-  String RN1; //1시간 강수량
-  String SKY; //하늘상태
-  String UUU; //동서바람성분
-  String VVV; //남북바람성분
-  String REH; //습도
-  String LGT; //낙뢰
-  String PTY; //강수형태
-  String VEC; //풍향
-  String WSD; //풍속
-
-  ForecastWeather({
-    required this.T1H,
-    required this.RN1,
-    required this.SKY,
-    required this.UUU,
-    required this.VVV,
-    required this.REH,
-    required this.LGT,
-    required this.PTY,
-    required this.VEC,
-    required this.WSD,
-  });
-
-  factory ForecastWeather.fromJson(Map<String, dynamic> json) {
-    return ForecastWeather(
-      T1H: json['T1H'],
-      RN1: json['RN1'],
-      SKY: json['SKY'],
-      UUU: json['UUU'],
-      VVV: json['VVV'],
-      REH: json['REH'],
-      LGT: json['LGT'],
-      PTY: json['PTY'],
-      VEC: json['VEC'],
-      WSD: json['WSD'],
-    );
-  }
-
-  @override
-  String toString() {
-    return 'Weather{T1H: $T1H, RN1: $RN1, SKY: $SKY, UUU: $UUU, VVV: $VVV, REH: $REH,LGT:$LGT, PTY: $PTY, VEC: $VEC, WSD: $WSD}';
+    return 'Weather{temp: $temp, pty: $pty, description: $description, backgroundImg: $backgroundImg}';
   }
 }

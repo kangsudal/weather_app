@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_app/service/fetchData.dart';
-import 'package:weather_app/service/secure_certificate.dart';
+import 'package:weather_app/service/for_certificate_verify_failed_error.dart';
+
+import 'model/weather.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
   HttpOverrides.global = MyHttpOverrides();
-  fetchData();
+  fetchCurrentWeather();
   runApp(const MyApp());
 }
 
@@ -91,57 +93,72 @@ class Top extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       flex: 3,
-      child: Stack(
-        children: [
-          Positioned(
-            child: Image.asset(
-              'images/Thunderstorm.jpg',
-              fit: BoxFit.cover,
-            ),
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-          ),
-          SizedBox.expand(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '128°',
-                  style: TextStyle(
-                    fontSize: 80,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Row(
+      child: FutureBuilder<Weather?>(
+          future: fetchCurrentWeather(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              try {
+                return Stack(
                   children: [
-                    Text(
-                      '비없음',
-                      style: TextStyle(
-                        color: Colors.white,
+                    Positioned(
+                      child: Image.asset(
+                        snapshot.data!.backgroundImg,
+                        fit: BoxFit.cover,
                       ),
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
                     ),
-                    Text(
-                      '습도',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      '풍속',
-                      style: TextStyle(
-                        color: Colors.white,
+                    SizedBox.expand(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            snapshot.data!.temp,
+                            style: TextStyle(
+                              fontSize: 80,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                snapshot.data!.description,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              // Text(
+                              //   '습도',
+                              //   style: TextStyle(
+                              //     color: Colors.white,
+                              //   ),
+                              // ),
+                              // Text(
+                              //   '풍속',
+                              //   style: TextStyle(
+                              //     color: Colors.white,
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+                );
+              } catch (e) {
+                print(e);
+                return Container(
+                  color: Colors.yellow,
+                );
+              }
+            }
+            return Center(child: const CircularProgressIndicator());
+          }),
     );
   }
 }
