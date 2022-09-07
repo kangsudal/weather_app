@@ -58,23 +58,23 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        onPressed: () {},
-        icon: Icon(Icons.menu),
-        color: Colors.white,
-      ),
+      // leading: IconButton(
+      //   onPressed: () {},
+      //   icon: Icon(Icons.menu),
+      //   color: Colors.white,
+      // ),
       title: Text(
         '동동동',
         style: TextStyle(color: Colors.white),
       ),
       centerTitle: true,
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.search),
-          color: Colors.white,
-        ),
-      ],
+      // actions: [
+      //   IconButton(
+      //     onPressed: () {},
+      //     icon: Icon(Icons.search),
+      //     color: Colors.white,
+      //   ),
+      // ],
       backgroundColor: Colors.transparent,
       elevation: 0,
     );
